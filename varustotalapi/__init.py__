@@ -1,0 +1,1 @@
+from .virustotalapi import VirusTotalAPI
