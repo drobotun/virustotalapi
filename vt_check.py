@@ -1,5 +1,6 @@
 """Модуль описывает тесты для проверки методов, реализемых в классе
    VirusTotalAPI.
+   
    Константы:
        API_KEY - должна содержать строку с вашим ключем доступа к API.
        TEST_TIMEOUT - необходима для проверки методов при превышении времени
@@ -28,12 +29,12 @@ TEST_TIMEOUT = 0.05
 
 TEST_FILE_PATH = 'eicar.com'
 
-TEST_HASH = '99017F6EEBBAC24F351415DD410D522D'
+TEST_HASH = '99017f6eebbac24f351415dd410d522d'
 
-TEST_HASH_LIST = ('EB5911054939BD90A7448E804E9DA52A,'
-                  '3CBF18FEE357D5A33AAB56795238B097,'
-                  'DF6C18DDF76BC0240D4AD73068DD4353,'
-                  'B18844BF115530B317A0AED8426EFAA4')
+TEST_HASH_LIST = ('eb5911054939bd90a7448e804e9da52a,'
+                  '3cbf18fee357d5a33aab56795238b097,'
+                  'df6c18ddf76bc0240d4ad73068dd4353,'
+                  'b18844bf115530b317a0aed8426efaa4')
 
 TEST_URL = 'www.github.com/drobotun'
 
