@@ -44,6 +44,9 @@ class VirusTotalAPI(object):
            ошибки чтения сканируемого файла.
 
        Методы:
+         _return_result: Используется методами 'file_report', 'file_scan',
+            'url_report', url_scan, 'ip_report' и 'domain_report' для вывода
+            результатов.
          file_report: Получение результатов сканирования файлов.
          file_scan: Отправка файла на сервер для сканирования.
          url_report: Получение результатов сканирования URL-адреса.
@@ -61,6 +64,26 @@ class VirusTotalAPI(object):
         self.api_key = api_key
         self.base_url = 'https://www.virustotal.com/vtapi/v2'
         self.version_api = 2
+
+    def _return_result(self, response):
+        if response.status_code == 200:
+            return dict(error_code=self.ERROR_SUCCESS,
+                        result=response.json())
+        elif response.status_code == 204:
+            return dict(error_code=self.ERROR_HTTP,
+                        result='HTTP errorr [204]. Request limit exceeded')
+        elif response.status_code == 400:
+            return dict(error_code=self.ERROR_HTTP,
+                        result='HTTP errorr [400]. Bad request')
+        elif response.status_code == 403:
+            return dict(error_code=self.ERROR_HTTP,
+                        result='HTTP errorr [403]. Invalid API key')
+        elif response.status_code == 413:
+            return dict(error_code=self.ERROR_HTTP,
+                        result='HTTP errorr [413]. File upload error')
+        else:
+            return dict(error_code=self.ERROR_HTTP,
+                        result='Unknown HTTP error')
 
     def file_report(self, resource, timeout=None, proxies=None):
         """Получение результатов сканирования файлов.
@@ -94,7 +117,7 @@ class VirusTotalAPI(object):
             return dict(error_code=self.ERROR_TIMEOUT,
                         result='Timeout error')
         else:
-            return _return_result(response)
+            return self._return_result(response)
 
     def file_scan(self, path_file_scan, timeout=None, proxies=None):
         """Отправка файла на сервер для сканирования.
@@ -130,7 +153,7 @@ class VirusTotalAPI(object):
             return dict(error_code=self.ERROR_FILE,
                         result='File not found or file read error')
         else:
-            return _return_result(response)
+            return self._return_result(response)
 
     def url_report(self, resource, scan='0', timeout=None, proxies=None):
         """Получение результатов сканирования URL-адреса.
@@ -165,7 +188,7 @@ class VirusTotalAPI(object):
         except requests.Timeout:
             return dict(error_code=self.ERROR_TIMEOUT,
                         result='Timeout error')
-        return _return_result(response)
+        return self._return_result(response)
 
     def url_scan(self, url, timeout=None, proxies=None):
         """Отправка URL-адреса для сканирования на сервер.
@@ -197,7 +220,7 @@ class VirusTotalAPI(object):
             return dict(error_code=self.ERROR_TIMEOUT,
                         result='Timeout error')
         else:
-            return _return_result(response)
+            return self._return_result(response)
 
     def ip_report(self, ip, timeout=None, proxies=None):
         """Получение результатов сканирования IP-адреса.
@@ -229,7 +252,7 @@ class VirusTotalAPI(object):
             return dict(error_code=self.ERROR_TIMEOUT,
                         result='Timeout error')
         else:
-            return _return_result(response)
+            return self._return_result(response)
 
     def domain_report(self, domain, timeout=None, proxies=None):
         """Получение результатов сканирования имени домена.
@@ -261,25 +284,4 @@ class VirusTotalAPI(object):
             return dict(error_code=self.ERROR_TIMEOUT,
                         result='Timeout error')
         else:
-            return _return_result(response)
-
-
-def _return_result(response):
-    if response.status_code == 200:
-        return dict(error_code=VirusTotalAPI.ERROR_SUCCESS,
-                    result=response.json())
-    elif response.status_code == 204:
-        return dict(error_code=VirusTotalAPI.ERROR_HTTP,
-                    result='HTTP errorr [204]. Request limit exceeded')
-    elif response.status_code == 400:
-        return dict(error_code=VirusTotalAPI.ERROR_HTTP,
-                    result='HTTP errorr [400]. Bad request')
-    elif response.status_code == 403:
-        return dict(error_code=VirusTotalAPI.ERROR_HTTP,
-                    result='HTTP errorr [403]. Invalid API key')
-    elif response.status_code == 413:
-        return dict(error_code=VirusTotalAPI.ERROR_HTTP,
-                    result='HTTP errorr [413]. File upload error')
-    else:
-        return dict(error_code=VirusTotalAPI.ERROR_HTTP,
-                    result='Unknown HTTP error')
+            return self._return_result(response)
