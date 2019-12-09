@@ -2,7 +2,7 @@
    сервиса virustotai.com.
 
    Евгений Дроботун (с) 2019
-   Лицензия: MIT ()
+   Лицензия: MIT (https://github.com/drobotun/virustotalapi/blob/master/LICENSE)
 
    Открытый API VirusTotal позволяет загружать и сканировать файлы, отправлять
    и сканировать URL-адреса, получать отчеты о завершенном сканировании файлов
