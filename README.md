@@ -3,12 +3,13 @@
 Подробное описание API смотри на: https://www.virustotal.com/en/documentation/public-api/
 
 ##Пример использования:
-
-   import json
-   from virustotalapi import VirusTotalAPI
-   vt_api = VirusTotalAPI(<Здесь необходима строка с ключом доступа к API>)
-   response = vt_api.file_report('8abd3f80059113ffd4693be25ba3f691')
-       ...
-   print('Error code = ', response['error_code'])
-   print(json.dumps(response['result'], sort_keys=False, indent=4))
-      ...
+```python
+import json
+from virustotalapi import VirusTotalAPI
+vt_api = VirusTotalAPI(<Здесь необходима строка с ключом доступа к API>)
+response = vt_api.file_report('8abd3f80059113ffd4693be25ba3f691')
+...
+print('Error code = ', response['error_code'])
+print(json.dumps(response['result'], sort_keys=False, indent=4))
+...
+```
